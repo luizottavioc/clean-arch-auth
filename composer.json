@@ -1,0 +1,21 @@
+{
+    "name": "luizottavioc/clean-arch-authentication",
+    "description": "authentication with clean architecture",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luiz Carvalho",
+            "email": "luizottavio49@gmail.com"
+        }
+    ],
+    "require": {}
+}
