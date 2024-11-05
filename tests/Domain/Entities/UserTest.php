@@ -80,7 +80,6 @@ final class UserTest extends TestCase
 
     public function testCanSetPassword(): void
     {
-        $newPassword = new HashedPassword('new_password_hash');
         $this->user->setPassword('new_password_hash');
         $passwordIsNew = $this->user->getPassword()->isEqualTo('new_password_hash');
         $this->assertTrue($passwordIsNew);

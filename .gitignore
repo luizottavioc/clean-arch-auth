@@ -2,3 +2,8 @@
 .env
 /.vscode
 /.docker
+/tests/coverage
+
+.phpunit.result.cache
+.phpunit.cache
+# /phpunit.xml
