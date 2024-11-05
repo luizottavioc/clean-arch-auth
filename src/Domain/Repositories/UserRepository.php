@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Repositories;
 
-interface UserRepositoryInterface
+use App\Domain\Entities\User;
+
+interface UserRepository
 {
-    public function findByEmail(string $email): ?User;
     public function save(User $user): void;
+    public function findByEmail(string $email): User;
 }
