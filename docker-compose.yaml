@@ -1,0 +1,7 @@
+services:
+  fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www

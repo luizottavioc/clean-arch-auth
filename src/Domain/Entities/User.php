@@ -50,7 +50,6 @@ final class User
         $this->registrationNumber = $registrationNumber;
     }
 
-
     public function getEmail(): string
     {
         return $this->email;
