@@ -15,8 +15,9 @@ RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdeb
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN mkdir -p /home/$user/.composer && \
-chown -R $user:$user /home/$user
+RUN mkdir -p /home/$user/.composer && chown -R $user:$user /home/$user
+
+RUN ln -s /var/www/vendor/bin/phpunit /usr/local/bin/phpunit
 
 WORKDIR /var/www
 
