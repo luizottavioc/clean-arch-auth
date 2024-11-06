@@ -1,36 +1,25 @@
 services:
-  codeigniter:
-    container_name: clean-arch-app-codeigniter
+  app:
+    container_name: clean-arch-app
     build:
       context: .
       dockerfile: dockerfile.fpm
     volumes:
       - ./:/var/www
-      - ./src/Infra/CodeIgniter:/var/www/src/Infra
-    networks:
-      - clean-arch
-
-  laravel:
-    container_name: clean-arch-app-laravel
-    build:
-      context: .
-      dockerfile: dockerfile.fpm
-    volumes:
-      - ./:/var/www
-      - ./src/Infra/Laravel:/var/www/src/Infra
     networks:
       - clean-arch
 
   nginx:
-    image: nginx:latest
-    container_name: nginx_proxy
-    ports:
-      - "8080:80"
+    container_name: clean-arch-nginx
+    image: nginx:1.25-alpine
     volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:8080"
     depends_on:
-      - laravel
-      - codeigniter
+      - app
+    networks:
+      - clean-arch
 
   postgres:
     container_name: clean-arch-postgres
