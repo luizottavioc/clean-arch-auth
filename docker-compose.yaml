@@ -1,8 +1,51 @@
 services:
-  fpm:
+  codeigniter:
+    container_name: clean-arch-app-codeigniter
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: clean-app-fpm
+      dockerfile: dockerfile.fpm
     volumes:
       - ./:/var/www
+      - ./src/Infra/CodeIgniter:/var/www/src/Infra
+    networks:
+      - clean-arch
+
+  laravel:
+    container_name: clean-arch-app-laravel
+    build:
+      context: .
+      dockerfile: dockerfile.fpm
+    volumes:
+      - ./:/var/www
+      - ./src/Infra/Laravel:/var/www/src/Infra
+    networks:
+      - clean-arch
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - laravel
+      - codeigniter
+
+  postgres:
+    container_name: clean-arch-postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_DATABASE:-clean-arch}
+    volumes:
+      - ./.docker/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - clean-arch
+
+networks:
+  clean-arch:
+    driver: bridge
