@@ -10,7 +10,6 @@ use App\Domain\ValueObjects\HashedPassword;
 
 use PDO;
 use DateTimeImmutable;
-use Exception;
 
 class PdoUserRepository implements UserRepository
 {

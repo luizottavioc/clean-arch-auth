@@ -8,7 +8,6 @@ use PDO;
 use PDOException;
 use RuntimeException;
 use Dotenv\Dotenv;
-use Exception;
 
 class DatabaseConnection
 {
