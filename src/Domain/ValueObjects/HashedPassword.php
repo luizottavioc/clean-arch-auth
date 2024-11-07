@@ -28,7 +28,6 @@ final class HashedPassword
         return password_verify($originalPassword, $this->hashedPassword);
     }
 
-
     public function __toString(): string
     {
         return $this->getValue();

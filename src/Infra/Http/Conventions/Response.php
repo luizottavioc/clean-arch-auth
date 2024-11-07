@@ -25,9 +25,9 @@ final class Response implements ResponseInterface
     }
 
     public function handle(): void {
-        http_response_code($this->statusCode);
         header('Content-Type: application/json');
+        http_response_code($this->statusCode);
+
         echo json_encode($this->body);
-        exit;
     }
 }

@@ -1,20 +1,55 @@
 <?php
 
+use App\Infra\Contracts\Factory;
 use App\Infra\Http\Conventions\Request;
 use App\Infra\Http\Conventions\Response;
 
-function route(string $controllerNamespace, string $action): void {
+$router = [
+    'POST' => [
+        '/login' => fn() => route(
+            'App\Infra\Http\Controllers\AuthController',
+            'handleLogin',
+            'App\Infra\Http\Factories\AuthControllerFactory'
+        ),
+        '/register' => fn() => route(
+            'App\Infra\Http\Controllers\AuthController',
+            'handleRegister',
+            'App\Infra\Http\Factories\AuthControllerFactory'
+        )
+    ]
+];
+
+function route(string $controllerNamespace, string $action, string|null $factoryNamespace): void
+{
     try {
         if (!class_exists($controllerNamespace)) {
             $response = new Response(404, ['message' => 'Controller not found']);
             $response->handle();
+            return;
         }
 
-        $controllerInstance = new $controllerNamespace();
+        if ($factoryNamespace !== null && !class_exists($factoryNamespace)) {
+            $response = new Response(404, ['message' => 'Factory not found']);
+            $response->handle();
+            return;
+        }
+
+        $factoryInstance = $factoryNamespace ? new $factoryNamespace() : null;
+
+        if ($factoryInstance !== null && !$factoryInstance instanceof Factory) {
+            $response = new Response(404, ['message' => 'Factory not found']);
+            $response->handle();
+            return;
+        }
+
+        $controllerInstance = $factoryInstance ? 
+            new $controllerNamespace($factoryInstance->createFactory()) : 
+            new $controllerNamespace();
 
         if (!method_exists($controllerInstance, $action)) {
             $response = new Response(404, ['message' => 'Method not found']);
             $response->handle();
+            return;
         }
 
         $request = new Request(
@@ -26,18 +61,11 @@ function route(string $controllerNamespace, string $action): void {
         $response = $controllerInstance->$action($request);
         if (!$response instanceof Response) {
             $response = new Response(500, ['message' => 'Internal server error']);
+            return;
         }
 
         $response->handle();
-
     } catch (Exception $e) {
         echo $e->getMessage();
     }
 }
-
-$router = [
-    'POST' => [
-        '/login' => fn() => route('App\Infra\Controllers\AuthController', 'handleLogin'),
-        '/register' => fn() => route('App\Infra\Controllers\AuthController', 'handleRegister')
-    ]
-];
