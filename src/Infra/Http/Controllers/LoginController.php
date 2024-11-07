@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Http\Controllers;
 
-use App\Infra\Http\Validator\LoginControllerValidator;
+use App\Infra\Http\Validators\LoginControllerValidator;
 
 use App\Application\UseCases\Login\LoginUser;
 use App\Application\UseCases\Login\InputBoundary as InputBoundaryLogin;

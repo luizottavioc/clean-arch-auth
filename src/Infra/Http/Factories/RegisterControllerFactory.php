@@ -9,7 +9,7 @@ use App\Infra\Contracts\Factory;
 use App\Application\UseCases\Login\LoginUser;
 use App\Application\UseCases\Register\RegisterUser;
 use App\Infra\Database\DatabaseConnection;
-use App\Infra\Http\Validator\RegisterControllerValidator;
+use App\Infra\Http\Validators\RegisterControllerValidator;
 use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\RegisterController;

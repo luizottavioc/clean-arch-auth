@@ -10,7 +10,7 @@ use App\Application\Exceptions\Login\UserNotFoundException;
 use App\Application\Exceptions\Login\WrongPasswordException;
 use App\Infra\Contracts\Request;
 use App\Infra\Http\Conventions\Response as ResponseConvention;
-use App\Infra\Http\Validator\LoginControllerValidator;
+use App\Infra\Http\Validators\LoginControllerValidator;
 use PHPUnit\Framework\TestCase;
 
 class LoginControllerTest extends TestCase

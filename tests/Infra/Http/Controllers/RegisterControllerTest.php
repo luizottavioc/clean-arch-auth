@@ -6,13 +6,11 @@ namespace Tests\Infra\Http\Controllers;
 
 use App\Infra\Http\Controllers\RegisterController;
 use App\Application\UseCases\Register\RegisterUser;
-use App\Application\UseCases\Register\InputBoundary as InputBoundaryRegister;
 use App\Application\Exceptions\Register\EmailRegisteredException;
 use App\Application\Exceptions\Register\RegistNumRegisteredException;
 use App\Infra\Contracts\Request;
-use App\Infra\Contracts\Response;
 use App\Infra\Http\Conventions\Response as ResponseConvention;
-use App\Infra\Http\Validator\RegisterControllerValidator;
+use App\Infra\Http\Validators\RegisterControllerValidator;
 use PHPUnit\Framework\TestCase;
 
 class RegisterControllerTest extends TestCase

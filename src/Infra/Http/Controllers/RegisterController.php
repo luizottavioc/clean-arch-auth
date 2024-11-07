@@ -9,7 +9,7 @@ use App\Application\UseCases\Register\InputBoundary as InputBoundaryRegister;
 use App\Application\Exceptions\Register\EmailRegisteredException;
 
 use App\Application\Exceptions\Register\RegistNumRegisteredException;
-use App\Infra\Http\Validator\RegisterControllerValidator;
+use App\Infra\Http\Validators\RegisterControllerValidator;
 
 use App\Infra\Contracts\Request;
 use App\Infra\Contracts\Response;

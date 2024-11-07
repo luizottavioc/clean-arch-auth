@@ -8,7 +8,7 @@ use App\Infra\Contracts\Factory;
 
 use App\Application\UseCases\CheckAuth\CheckAuth;
 use App\Infra\Database\DatabaseConnection;
-use App\Infra\Http\Validator\CheckAuthControllerValidator;
+use App\Infra\Http\Validators\CheckAuthControllerValidator;
 use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\CheckAuthController;

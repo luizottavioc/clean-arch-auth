@@ -8,7 +8,7 @@ use App\Infra\Contracts\Factory;
 
 use App\Application\UseCases\Login\LoginUser;
 use App\Infra\Database\DatabaseConnection;
-use App\Infra\Http\Validator\LoginControllerValidator;
+use App\Infra\Http\Validators\LoginControllerValidator;
 use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\LoginController;

@@ -9,7 +9,7 @@ use App\Application\Exceptions\CheckAuth\InvalidTokenException;
 use App\Application\UseCases\CheckAuth\CheckAuth;
 use App\Infra\Contracts\Request;
 use App\Infra\Http\Conventions\Response as ResponseConvention;
-use App\Infra\Http\Validator\CheckAuthControllerValidator;
+use App\Infra\Http\Validators\CheckAuthControllerValidator;
 use PHPUnit\Framework\TestCase;
 
 class CheckAuthControllerTest extends TestCase

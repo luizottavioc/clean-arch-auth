@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Http\Controllers;
 
 use App\Application\Exceptions\CheckAuth\InvalidTokenException;
-use App\Infra\Http\Validator\CheckAuthControllerValidator;
+use App\Infra\Http\Validators\CheckAuthControllerValidator;
 
 use App\Application\UseCases\CheckAuth\CheckAuth;
 use App\Application\UseCases\CheckAuth\InputBoundary;

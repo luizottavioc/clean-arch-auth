@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra\Http\Validator;
+namespace App\Infra\Http\Validators;
 
 class RegisterControllerValidator
 {
