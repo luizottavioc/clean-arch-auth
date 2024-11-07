@@ -13,6 +13,8 @@ use Firebase\JWT\Key;
 
 final class PhpJwtAdapter implements AuthTokenService
 {
+    const SECONDS_TO_EXPIRE_TOKEN = 3600;
+
     private string $jwtSecret;
     
     public function __construct()
@@ -31,7 +33,7 @@ final class PhpJwtAdapter implements AuthTokenService
             'aud' => 'http://localhost',
             'iat' => time(),
             'nbf' => time(),
-            'exp' => time() + 3600,
+            'exp' => time() + self::SECONDS_TO_EXPIRE_TOKEN,
             'sub' => $user->getEmail(),
         ];
 
