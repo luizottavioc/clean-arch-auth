@@ -6,7 +6,7 @@ namespace App\Infra\Http\Conventions;
 
 use App\Infra\Contracts\Request as RequestInterface;
 
-final class Request implements RequestInterface
+class Request implements RequestInterface
 {
     public function __construct(
         public readonly string $method,

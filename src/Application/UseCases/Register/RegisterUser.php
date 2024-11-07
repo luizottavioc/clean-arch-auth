@@ -13,7 +13,7 @@ use App\Application\Exceptions\Register\EmailRegisteredException;
 use App\Application\Exceptions\Register\RegistNumRegisteredException;
 
 
-final class RegisterUser
+class RegisterUser
 {
     private UserRepository $userRepository;
     private AuthTokenService $tokenService;

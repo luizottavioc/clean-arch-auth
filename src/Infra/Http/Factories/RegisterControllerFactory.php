@@ -14,7 +14,7 @@ use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\RegisterController;
 
-final class RegisterControllerFactory implements Factory
+class RegisterControllerFactory implements Factory
 {
     public function createFactory(): object
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\UseCases\Register;
 
-final class InputBoundary
+class InputBoundary
 {
     private string $name;
     private string $registrationNumber;

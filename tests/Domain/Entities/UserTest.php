@@ -96,4 +96,39 @@ final class UserTest extends TestCase
         $this->user->setCreatedAt($newCreatedAt);
         $this->assertSame($newCreatedAt, $this->user->getCreatedAt());
     }
+
+    public function testToArrayReturnsExpectedArray(): void
+    {
+        $name = 'John Doe';
+        $registrationNumber = '12345';
+        $email = 'john.doe@example.com';
+        $password = new HashedPassword('password123');
+        $createdAt = new DateTimeImmutable('2023-01-01 12:00:00');
+
+        $user = new User($name, $registrationNumber, $email, $password, $createdAt);
+
+        $expectedArray = [
+            'name' => $name,
+            'registration_number' => $registrationNumber,
+            'email' => $email,
+            'created_at' => '2023-01-01 12:00:00',
+        ];
+
+        $this->assertSame($expectedArray, $user->toArray());
+    }
+
+    public function testToArrayFormatsCreatedAtCorrectly(): void
+    {
+        $name = 'Jane Doe';
+        $registrationNumber = '54321';
+        $email = 'jane.doe@example.com';
+        $password = new HashedPassword('securepass');
+        $createdAt = new DateTimeImmutable('2024-02-02 08:30:15');
+
+        $user = new User($name, $registrationNumber, $email, $password, $createdAt);
+
+        $array = $user->toArray();
+
+        $this->assertSame('2024-02-02 08:30:15', $array['created_at']);
+    }
 }

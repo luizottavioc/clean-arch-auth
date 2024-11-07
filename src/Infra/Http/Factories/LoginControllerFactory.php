@@ -13,7 +13,7 @@ use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\LoginController;
 
-final class LoginControllerFactory implements Factory
+class LoginControllerFactory implements Factory
 {
     public function createFactory(): object
     {

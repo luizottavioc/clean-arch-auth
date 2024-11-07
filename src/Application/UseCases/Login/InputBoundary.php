@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\UseCases\Login;
 
-final class InputBoundary
+class InputBoundary
 {
     private string $email;
     private string $password;

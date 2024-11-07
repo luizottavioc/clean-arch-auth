@@ -12,7 +12,7 @@ use PDO;
 use DateTimeImmutable;
 use Exception;
 
-final class PdoUserRepository implements UserRepository
+class PdoUserRepository implements UserRepository
 {
     public function __construct(private PDO $pdo)
     {

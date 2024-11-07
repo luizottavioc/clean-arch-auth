@@ -13,7 +13,7 @@ use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
 use App\Infra\Http\Controllers\CheckAuthController;
 
-final class CheckAuthControllerFactory implements Factory
+class CheckAuthControllerFactory implements Factory
 {
     public function createFactory(): object
     {

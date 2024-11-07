@@ -6,7 +6,7 @@ namespace App\Application\UseCases\Register;
 
 use App\Domain\Entities\User;
 
-final class OutputBoundary
+class OutputBoundary
 {
     public function __construct(private string $token)
     {

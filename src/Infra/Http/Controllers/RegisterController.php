@@ -15,7 +15,7 @@ use App\Infra\Contracts\Request;
 use App\Infra\Contracts\Response;
 use App\Infra\Http\Conventions\Response as ResponseConvention;
 
-final class RegisterController
+class RegisterController
 {
     public function __construct(
         private RegisterControllerValidator $validator,

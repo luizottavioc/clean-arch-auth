@@ -14,7 +14,7 @@ use App\Infra\Contracts\Request;
 use App\Infra\Contracts\Response;
 use App\Infra\Http\Conventions\Response as ResponseConvention;
 
-final class CheckAuthController
+class CheckAuthController
 {
     public function __construct(
         private CheckAuthControllerValidator $validator,

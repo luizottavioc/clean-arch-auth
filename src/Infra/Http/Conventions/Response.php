@@ -6,7 +6,7 @@ namespace App\Infra\Http\Conventions;
 
 use App\Infra\Contracts\Response as ResponseInterface;
 
-final class Response implements ResponseInterface
+class Response implements ResponseInterface
 {
     public function __construct(
         public readonly int $statusCode,

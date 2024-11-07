@@ -8,7 +8,7 @@ use App\Domain\ValueObjects\HashedPassword;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-final class User
+class User
 {
     private string $name;
     private string $registrationNumber;

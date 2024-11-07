@@ -9,7 +9,7 @@ use App\Domain\Repositories\UserRepository;
 
 use App\Application\Exceptions\CheckAuth\InvalidTokenException;
 
-final class CheckAuth
+class CheckAuth
 {
     public function __construct(
         private UserRepository $userRepository,

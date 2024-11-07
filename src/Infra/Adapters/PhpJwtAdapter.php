@@ -11,7 +11,7 @@ use Dotenv\Dotenv;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-final class PhpJwtAdapter implements AuthTokenService
+class PhpJwtAdapter implements AuthTokenService
 {
     const SECONDS_TO_EXPIRE_TOKEN = 3600;
 

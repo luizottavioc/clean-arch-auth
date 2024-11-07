@@ -10,7 +10,7 @@ use App\Application\Contracts\AuthTokenService;
 use App\Application\Exceptions\Login\UserNotFoundException;
 use App\Application\Exceptions\Login\WrongPasswordException;
 
-final class LoginUser
+class LoginUser
 {
     private UserRepository $userRepository;
     private AuthTokenService $tokenService;
