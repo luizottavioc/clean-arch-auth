@@ -7,14 +7,13 @@ namespace App\Infra\Http\Factories;
 use App\Infra\Contracts\Factory;
 
 use App\Application\UseCases\Login\LoginUser;
-use App\Application\UseCases\Register\RegisterUser;
 use App\Infra\Database\DatabaseConnection;
-use App\Infra\Http\Validator\AuthControllerValidator;
+use App\Infra\Http\Validator\LoginControllerValidator;
 use App\Infra\Repositories\PdoUserRepository;
 use App\Infra\Adapters\PhpJwtAdapter;
-use App\Infra\Http\Controllers\AuthController;
+use App\Infra\Http\Controllers\LoginController;
 
-final class AuthControllerFactory implements Factory
+final class LoginControllerFactory implements Factory
 {
     public function createFactory(): object
     {
@@ -23,15 +22,13 @@ final class AuthControllerFactory implements Factory
 
         $userRepository = new PdoUserRepository($connection);
         $authTokenService = new PhpJwtAdapter();
-        $authValidator = new AuthControllerValidator();
-
+        
+        $controllerValidator = new LoginControllerValidator();
         $loginUserUseCase = new LoginUser($userRepository, $authTokenService);
-        $registerUserUseCase = new RegisterUser($userRepository, $authTokenService);
 
-        return new AuthController(
-            $authValidator,
+        return new LoginController(
+            $controllerValidator,
             $loginUserUseCase,
-            $registerUserUseCase,
         );
     }
 }

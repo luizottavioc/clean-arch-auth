@@ -7,14 +7,14 @@ use App\Infra\Http\Conventions\Response;
 $router = [
     'POST' => [
         '/login' => fn() => route(
-            'App\Infra\Http\Controllers\AuthController',
-            'handleLogin',
-            'App\Infra\Http\Factories\AuthControllerFactory'
+            'App\Infra\Http\Controllers\LoginController',
+            'handle',
+            'App\Infra\Http\Factories\LoginControllerFactory'
         ),
         '/register' => fn() => route(
-            'App\Infra\Http\Controllers\AuthController',
-            'handleRegister',
-            'App\Infra\Http\Factories\AuthControllerFactory'
+            'App\Infra\Http\Controllers\RegisterController',
+            'handle',
+            'App\Infra\Http\Factories\RegisterControllerFactory'
         )
     ]
 ];
@@ -22,33 +22,10 @@ $router = [
 function route(string $controllerNamespace, string $action, string|null $factoryNamespace): void
 {
     try {
-        if (!class_exists($controllerNamespace)) {
-            $response = new Response(404, ['message' => 'Controller not found']);
-            $response->handle();
-            return;
-        }
+        $controller = resolveController($controllerNamespace, $factoryNamespace);
 
-        if ($factoryNamespace !== null && !class_exists($factoryNamespace)) {
-            $response = new Response(404, ['message' => 'Factory not found']);
-            $response->handle();
-            return;
-        }
-
-        $factoryInstance = $factoryNamespace ? new $factoryNamespace() : null;
-
-        if ($factoryInstance !== null && !$factoryInstance instanceof Factory) {
-            $response = new Response(404, ['message' => 'Factory not found']);
-            $response->handle();
-            return;
-        }
-
-        $controllerInstance = $factoryInstance ? 
-            $factoryInstance->createFactory() : 
-            new $controllerNamespace();
-
-        if (!method_exists($controllerInstance, $action)) {
-            $response = new Response(404, ['message' => 'Method not found']);
-            $response->handle();
+        if (!$controller || !method_exists($controller, $action)) {
+            sendResponse(404, 'Controller or method not found');
             return;
         }
 
@@ -58,16 +35,41 @@ function route(string $controllerNamespace, string $action, string|null $factory
             getallheaders()
         );
 
-        $response = $controllerInstance->$action($request);
+        $response = $controller->$action($request);
+
         if (!$response instanceof Response) {
-            $response = new Response(500, ['message' => 'Internal server error']);
-            $response->handle();
+            sendResponse(500, 'Internal server error');
             return;
         }
 
         $response->handle();
     } catch (Exception $e) {
-        $response = new Response(500, ['message' => $e->getMessage()]);
-        $response->handle();
+        sendResponse(500, $e->getMessage());
     }
+}
+
+function resolveController(string $controllerNamespace, ?string $factoryNamespace): ?object
+{
+    if (!class_exists($controllerNamespace)) {
+        sendResponse(404, 'Controller not found');
+        return null;
+    }
+
+    if ($factoryNamespace !== null) {
+        if (!class_exists($factoryNamespace) || !is_subclass_of($factoryNamespace, Factory::class)) {
+            sendResponse(404, 'Factory not found or invalid');
+            return null;
+        }
+
+        $factoryInstance = new $factoryNamespace();
+        return $factoryInstance->createFactory();
+    }
+
+    return new $controllerNamespace();
+}
+
+function sendResponse(int $statusCode, string $message): void
+{
+    $response = new Response($statusCode, ['message' => $message]);
+    $response->handle();
 }

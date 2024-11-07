@@ -14,7 +14,6 @@ use Exception;
 
 final class PdoUserRepository implements UserRepository
 {
-
     public function __construct(private PDO $pdo)
     {
     }
@@ -37,6 +36,30 @@ final class PdoUserRepository implements UserRepository
         $statement = $this->pdo->prepare($query);
         $statement->execute([
             'email' => $email,
+        ]);
+
+        $user = $statement->fetchObject();
+        if($user === false) {
+            return null;
+        }
+
+        $userInstance = new User(
+            $user->name,
+            $user->registration_number,
+            $user->email,
+            new HashedPassword($user->password, true),
+            new DateTimeImmutable($user->created_at)
+        );
+
+        return $userInstance;
+    }
+
+    public function findByRegistrationNumber(string $registrationNumber): ?User
+    {
+        $query = 'SELECT * FROM users WHERE registration_number = :registration_number LIMIT 1';
+        $statement = $this->pdo->prepare($query);
+        $statement->execute([
+            'registration_number' => $registrationNumber,
         ]);
 
         $user = $statement->fetchObject();

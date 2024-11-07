@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Application\UseCases\Register;
 
+use App\Domain\Entities\User;
+
 final class OutputBoundary
 {
-    private string $token;
-
-    public function __construct(string $token)
+    public function __construct(private string $token)
     {
-        $this->token = $token;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
     }
 }

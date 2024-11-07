@@ -7,7 +7,7 @@ namespace App\Application\Exceptions\Register;
 use Exception;
 use Throwable;
 
-class EmailAlreadyRegisteredException extends Exception
+class RegistNumRegisteredException extends Exception
 {
     public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
     {
