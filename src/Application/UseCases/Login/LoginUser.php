@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application\UseCases\Login;
 
+use App\Application\Exceptions\Login\UserNotFoundException;
 use App\Application\Exceptions\Login\WrongPasswordException;
 use App\Domain\Repositories\UserRepository;
 use App\Application\Contracts\AuthTokenService;
-
-use Exception;
 
 final class LoginUser
 {
@@ -30,6 +29,10 @@ final class LoginUser
         $inputPassword = $input->getPassword();
 
         $user = $this->userRepository->findByEmail($inputEmail);
+
+        if (empty($user)) {
+            throw new UserNotFoundException('User not found');
+        }
 
         $userPassword = $user->getPassword();
         $passwordMatch = $userPassword->isEqualTo($inputPassword);

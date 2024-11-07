@@ -10,7 +10,6 @@ use App\Domain\Repositories\UserRepository;
 use App\Application\Contracts\AuthTokenService;
 
 use App\Domain\ValueObjects\HashedPassword;
-use Exception;
 
 final class RegisterUser
 {
@@ -30,7 +29,7 @@ final class RegisterUser
         $inputEmail = $input->getEmail();
         $userWithSameEmail = $this->userRepository->findByEmail($inputEmail);
 
-        if ($userWithSameEmail !== null) {
+        if (!empty($userWithSameEmail)) {
             throw new EmailAlreadyRegisteredException('Email already registered');
         }
 

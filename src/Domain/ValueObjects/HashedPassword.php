@@ -8,9 +8,9 @@ final class HashedPassword
 {
     private string $hashedPassword;
 
-    public function __construct(string $originalPassword)
+    public function __construct(string $password, bool $alreadyHashed = false)	
     {
-        $this->hashedPassword = self::hashPassword($originalPassword);
+        $this->hashedPassword = $alreadyHashed ? $password : self::hashPassword($password);
     }
 
     public static function hashPassword(string $password): string

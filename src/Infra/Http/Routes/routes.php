@@ -43,7 +43,7 @@ function route(string $controllerNamespace, string $action, string|null $factory
         }
 
         $controllerInstance = $factoryInstance ? 
-            new $controllerNamespace($factoryInstance->createFactory()) : 
+            $factoryInstance->createFactory() : 
             new $controllerNamespace();
 
         if (!method_exists($controllerInstance, $action)) {
@@ -54,18 +54,20 @@ function route(string $controllerNamespace, string $action, string|null $factory
 
         $request = new Request(
             $_SERVER['REQUEST_METHOD'],
-            $_POST,
-            $_SERVER
+            json_decode(file_get_contents('php://input'), true),
+            getallheaders()
         );
 
         $response = $controllerInstance->$action($request);
         if (!$response instanceof Response) {
             $response = new Response(500, ['message' => 'Internal server error']);
+            $response->handle();
             return;
         }
 
         $response->handle();
     } catch (Exception $e) {
-        echo $e->getMessage();
+        $response = new Response(500, ['message' => $e->getMessage()]);
+        $response->handle();
     }
 }

@@ -9,8 +9,10 @@ use App\Infra\Contracts\Factory;
 use App\Application\UseCases\Login\LoginUser;
 use App\Application\UseCases\Register\RegisterUser;
 use App\Infra\Database\DatabaseConnection;
-use App\Infra\Http\Controllers\AuthController;
+use App\Infra\Http\Validator\AuthControllerValidator;
 use App\Infra\Repositories\PdoUserRepository;
+use App\Infra\Adapters\PhpJwtAdapter;
+use App\Infra\Http\Controllers\AuthController;
 
 final class AuthControllerFactory implements Factory
 {
@@ -20,14 +22,16 @@ final class AuthControllerFactory implements Factory
         $connection = $database->getConnection();
 
         $userRepository = new PdoUserRepository($connection);
-        $authTokenService = new AuthTokenService();
+        $authTokenService = new PhpJwtAdapter();
+        $authValidator = new AuthControllerValidator();
 
         $loginUserUseCase = new LoginUser($userRepository, $authTokenService);
         $registerUserUseCase = new RegisterUser($userRepository, $authTokenService);
 
         return new AuthController(
+            $authValidator,
             $loginUserUseCase,
-            $registerUserUseCase
+            $registerUserUseCase,
         );
     }
 }

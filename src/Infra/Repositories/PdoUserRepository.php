@@ -21,16 +21,17 @@ final class PdoUserRepository implements UserRepository
 
     public function save(User $user): void
     {
-        $query = 'INSERT INTO users (name, email, password) VALUES (:name, :email, :password)';
+        $query = 'INSERT INTO users (name, registration_number, email, password) VALUES (:name, :registration_number, :email, :password)';
         $statement = $this->pdo->prepare($query);
         $statement->execute([
             'name' => $user->getName(),
+            'registration_number' => $user->getRegistrationNumber(),
             'email' => $user->getEmail(),
             'password' => (string) $user->getPassword(),
         ]);
     }
 
-    public function findByEmail(string $email): User
+    public function findByEmail(string $email): ?User
     {
         $query = 'SELECT * FROM users WHERE email = :email LIMIT 1';
         $statement = $this->pdo->prepare($query);
@@ -40,14 +41,14 @@ final class PdoUserRepository implements UserRepository
 
         $user = $statement->fetchObject();
         if($user === false) {
-            throw new Exception('User not found');
+            return null;
         }
 
         $userInstance = new User(
             $user->name,
             $user->registration_number,
             $user->email,
-            new HashedPassword($user->password),
+            new HashedPassword($user->password, true),
             new DateTimeImmutable($user->created_at)
         );
 
