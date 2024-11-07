@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\UseCases\Login;
 
-use App\Application\Exceptions\Login\UserNotFoundException;
-use App\Application\Exceptions\Login\WrongPasswordException;
 use App\Domain\Repositories\UserRepository;
 use App\Application\Contracts\AuthTokenService;
+
+use App\Application\Exceptions\Login\UserNotFoundException;
+use App\Application\Exceptions\Login\WrongPasswordException;
 
 final class LoginUser
 {

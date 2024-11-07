@@ -5,6 +5,13 @@ use App\Infra\Http\Conventions\Request;
 use App\Infra\Http\Conventions\Response;
 
 $router = [
+    'GET' => [
+        '/check-auth' => fn() => route(
+            'App\Infra\Http\Controllers\CheckAuthController',
+            'handle',
+            'App\Infra\Http\Factories\CheckAuthControllerFactory'
+        ),
+    ],
     'POST' => [
         '/login' => fn() => route(
             'App\Infra\Http\Controllers\LoginController',
@@ -31,8 +38,8 @@ function route(string $controllerNamespace, string $action, string|null $factory
 
         $request = new Request(
             $_SERVER['REQUEST_METHOD'],
-            json_decode(file_get_contents('php://input'), true),
-            getallheaders()
+            json_decode(file_get_contents('php://input'), true) ?? [],
+            getallheaders() ?? []
         );
 
         $response = $controller->$action($request);

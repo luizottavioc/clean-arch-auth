@@ -79,4 +79,14 @@ final class User
     {
         $this->createdAt = $createdAt;
     }
+
+    public function toArray(): array 
+    {
+        return [
+            'name' => $this->name,
+            'registration_number' => $this->registrationNumber,
+            'email' => $this->email,
+            'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
+        ];
+    }
 }
