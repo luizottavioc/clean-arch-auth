@@ -10,18 +10,21 @@ try {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
     $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-    if (!isset($router[$requestMethod])) {
+    if (empty($router[$requestMethod])) {
         $response = new Response(404, ['message' => 'Page not found']);
         $response->handle();
+        return;
     }
 
     if (!array_key_exists($uri, $router[$requestMethod])) {
         $response = new Response(404, ['message' => 'Resource not found']);
         $response->handle();
+        return;
     }
 
     $controller = $router[$requestMethod][$uri];
     $controller();
 } catch(Exception $e){
-    echo $e->getMessage();
+    $response = new Response(500, ['message' => $e->getMessage()]);
+    $response->handle();
 }

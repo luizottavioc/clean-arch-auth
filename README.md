@@ -61,3 +61,6 @@ docker exec -it clean-arch-app bash
 # Step 5: Run PHPUnit tests
 phpunit tests --colors
 ```
+
+### Endpoints
+Access and test the endpoints. [Click Here](https://www.postman.com/luizottavioc-workspace/public-workspace/collection/jkjisml/clean-architecture-authentication?action=share&creator=39605447) to access the Postman workspace
